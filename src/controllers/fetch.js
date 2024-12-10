@@ -9,8 +9,11 @@ export async function fetchPlayersActiveMatch (puuid) {
             console.log('No hay ninguna partida activa')
             return false
         }
+        if (resp.status === 200) {
+            return true
+        }
         // console.log(data.gameId)
-        return true
+        return false
     } catch (error) {
         console.log("Error de servidor")
         return false
