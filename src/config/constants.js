@@ -92,7 +92,7 @@ export const PLAYERS = [
     },
     {
         name: 'Caliste',
-        gameName: ' KC NEXT ADKING',
+        gameName: 'KC NEXT ADKING',
         puuid: 'MPP42et9salN2NCNq6Rl9R7WIcaJOPdcMPLFKxIYUnShQbqTHsl3mNU90nhAISV1crGodOoFdCK_iA',
         id: 'yukBbsrUXmV28zhykrtaAdQitqAsayIcNj9wOEryWRM1ozuy',
         opgg: 'https://www.op.gg/summoners/euw/KC%20NEXT%20ADKING-EUW/ingame',
