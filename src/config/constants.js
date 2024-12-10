@@ -34,4 +34,18 @@ export const PLAYERS = [
         id: 'NXO5MFalCTUBm4AtOhd-i5pGBaZVf5GEdZ4eNCxsNXLM8NKw',
         opgg: 'https://www.op.gg/summoners/euw/Winter%20arc-Gavi6/ingame',
     },
+    {
+        name: 'Razork',
+        gameName: 'Razørk Activoo',
+        puuid: 'D5VYtLHdGzOJEiDpDNm9JwuyDY_KsqBTPes06zoJVb4WWXYvAuHYshKZGdwmW9ofV2TZXWs4XutO1Q',
+        id: 'XfIiJ6UKEcTMX6kSuzc7cF0egr-B8IhRMXelFbk2rxzpD7I',
+        opgg: 'https://www.op.gg/summoners/euw/Raz%C3%B8rk%20Activoo-razzz/ingame',
+    },
+    {
+        name: 'Oscarinin',
+        gameName: 'CABALLO GANADOR',
+        puuid: 'Xqph9ulTw_1EhAVCFmwLawfu_ohbTeETOu04sluTiHWYT_Tcz9N8X1nGmBgnZHqH03jSb861CZ5O9w',
+        id: 'oZotwMHZDdPiGcXEdLvc-7_uzwSEeJH5KermwBsl3VEteNc',
+        opgg: 'https://www.op.gg/summoners/euw/CABALLO%20GANADOR-CTANG/ingame',
+    },
 ]
