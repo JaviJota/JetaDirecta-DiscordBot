@@ -48,6 +48,7 @@ async function handleCheckPlayersActive(players) {
             } 
             else if (fetchPlayerActivity && !activePlayers.includes(player.puuid)) {
                 activePlayers.push(player.puuid);
+                console.log('aaaaaaaaaaaaaa', player)
 
                 try {
                     const resp = await fetch(WEBHOOK_URL, {
