@@ -5,7 +5,7 @@ export async function fetchPlayersActiveMatch (puuid) {
     try {
         const resp = await fetch(url);
         const data = await resp.json();
-        console.log(resp)
+        console.log(resp.status)
         if (resp.status === 404) {
             console.log('No hay ninguna partida activa')
             return false
