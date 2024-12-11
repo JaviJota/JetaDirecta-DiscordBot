@@ -37,6 +37,7 @@ async function handleCheckPlayersActive(players) {
     for (let player of players) {
         try {
             const fetchPlayerActivity = await fetchPlayersActiveMatch(player.puuid);
+            console.log(fetchPlayerActivity, player, activePlayers)
             
             if (!fetchPlayerActivity && activePlayers.includes(player.puuid)) {
                 const activePlayersIndex = activePlayers.indexOf(player.puuid);
@@ -48,7 +49,6 @@ async function handleCheckPlayersActive(players) {
             } 
             else if (fetchPlayerActivity && !activePlayers.includes(player.puuid)) {
                 activePlayers.push(player.puuid);
-                console.log('aaaaaaaaaaaaaa', player)
 
                 try {
                     const resp = await fetch(WEBHOOK_URL, {
