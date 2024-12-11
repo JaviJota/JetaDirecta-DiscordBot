@@ -37,7 +37,6 @@ async function handleCheckPlayersActive(players) {
     for (let player of players) {
         try {
             const fetchPlayerActivity = await fetchPlayersActiveMatch(player.puuid);
-            console.log(fetchPlayerActivity, player, activePlayers)
             
             if (!fetchPlayerActivity && activePlayers.includes(player.puuid)) {
                 const activePlayersIndex = activePlayers.indexOf(player.puuid);
@@ -60,7 +59,7 @@ async function handleCheckPlayersActive(players) {
                             content: `>>> ## ${player.name} está jugando! :loudspeaker:\n**Account:** ${player.gameName}\n[OPGG :arrow_down:](${player.opgg})`
                         }),
                     });
-
+                    console.log('post', resp)
                     if (!resp.ok) {
                         throw new Error('Error al enviar el mensaje');
                     }
