@@ -11,7 +11,7 @@ export async function fetchPlayersActiveMatch (puuid) {
         }
         if (resp.status === 200) {
             console.log('Partida Activa')
-            return true
+            return {success: true, participants: data.participants}
         }
         // console.log(data.gameId)
         return false
