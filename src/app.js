@@ -47,7 +47,7 @@ async function handleCheckPlayersActive(players) {
     let gameParticipants = [];
     let championName = '';
     try {
-      const fetchPlayerActivity = await fetchPlayersActiveMatch(player.puuid);
+      const fetchPlayerActivity = await fetchPlayersActiveMatch({player});
 
       if (!fetchPlayerActivity) {
         const activePlayersIndex = activePlayers.indexOf(player.puuid);
@@ -74,13 +74,14 @@ async function handleCheckPlayersActive(players) {
         }
 
         try {
-          const resp = await fetch(WEBHOOK_URL, {
+          const resp = await fetch("https://discord.com/api/v10/channels/1315385759511085171/messages", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bot ${process.env.DISCORD_TOKEN}`
             },
             body: JSON.stringify({
-            content: `>>> ## ${player.name} está jugando! :loudspeaker:\n**Champion:** ${championName}\n**Account:** ${player.gameName}\n**Players:** ${gameParticipants.length ? gameParticipants.join(" | ") : 'Ningún jugador de LEC en la partida.'}\n[OPGG :arrow_down:](${player.opgg})`,
+              content: `**${player.name} está jugando!** :loudspeaker:\n**Champion:** ${championName}\n**Account:** ${player.gameName}\n**Players:** ${gameParticipants.length ? gameParticipants.join(" | ") : 'Ningún jugador de LEC en la partida.'}\n[**OPGG :arrow_down:**](${player.opgg})`,
             }),
           });
 

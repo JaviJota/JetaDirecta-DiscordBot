@@ -308,6 +308,7 @@ export const CHAMPIONS = [
     { name: 'Akali', key: '84' },
     { name: 'Akshan', key: '166' },
     { name: 'Alistar', key: '12' },
+    { name: 'Ambessa', key: '799' },
     { name: 'Amumu', key: '32' },
     { name: 'Anivia', key: '34' },
     { name: 'Annie', key: '1' },
