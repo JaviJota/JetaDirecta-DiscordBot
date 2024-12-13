@@ -7,6 +7,10 @@ export async function fetchPlayersActiveMatch ({player}) {
         const resp = await fetch(url);
         const data = await resp.json();
         console.log(resp.status)
+        if (resp.status === 429) {
+            console.log('Límite de solicitudes excedido')
+            return false
+        }
         if (!resp.ok) {
             console.log(`${player.name} no está jugando`)
             return false

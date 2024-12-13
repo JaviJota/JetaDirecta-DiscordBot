@@ -78,7 +78,7 @@ export const TRACKED_PLAYERS = [
     },
     {
         name: 'Hans Sama',
-        gameName: 'Dr BlackBerry',
+        gameName: 'Dr Mango',
         puuid: 'o6X5Bv0Ukp34Kz_HOxJA1ah83bNvBOaMRJo2IOpkpzBG4cQAypGc4kFjD428z_uaCOPLpjZoJJyuNQ',
         id: 'qNHHKdnpMtJ7UoPY2MXYmnmDtXgLEN5dWffFfwmAumcuAPQ',
         opgg: 'https://www.op.gg/summoners/euw/Dr%20Mango-Hans/ingame',
