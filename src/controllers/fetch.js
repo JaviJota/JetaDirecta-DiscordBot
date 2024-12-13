@@ -6,6 +6,7 @@ export async function fetchPlayersActiveMatch ({player}) {
     try {
         const resp = await fetch(url);
         const data = await resp.json();
+        console.log(resp.status)
         if (!resp.ok) {
             console.log(`${player.name} no está jugando`)
             return false
