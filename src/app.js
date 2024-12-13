@@ -74,14 +74,14 @@ async function handleCheckPlayersActive(players) {
         }
 
         try {
-          const resp = await fetch("https://discord.com/api/v10/channels/1315385759511085171/messages", {
+          const resp = await fetch(`https://discord.com/api/v10/channels/${process.env.CHANNEL_ID}/messages`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bot ${process.env.DISCORD_TOKEN}`
             },
             body: JSON.stringify({
-              content: `**${player.name} está jugando!** :loudspeaker:\n**Champion:** ${championName}\n**Account:** ${player.gameName}\n**Players:** ${gameParticipants.length ? gameParticipants.join(" | ") : 'Ningún jugador de LEC en la partida.'}\n[**OPGG :arrow_down:**](${player.opgg})`,
+              content: `**${player.name} está jugando!** :loudspeaker:\n**Champion:** ${championName}\n**Account:** ${player.gameName}\n**Players:** ${gameParticipants.length ? gameParticipants.join(" | ") : 'Ningún jugador de LEC en la partida.'}\n[OPGG :arrow_down:](${player.opgg})`,
             }),
           });
 
