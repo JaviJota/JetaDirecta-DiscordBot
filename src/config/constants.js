@@ -60,7 +60,7 @@ export const TRACKED_PLAYERS = [
         gameName: 'Dr Orange',
         puuid: 'M2OXHggFtHLNm-uG1Pga4NhFWnmlwwn416G1t_6qISLeH_v8PnB-KiTblbLCQj2oPrdA_gstZNZKmA',
         id: 'LLCEOJdIdfvteA6pzy_9yOcUA1b-d0NuIwwSPlJ9I7rWhLU',
-        opgg: 'https://www.op.gg/summoners/euw/Dr%20DOrange-Caps/ingame',
+        opgg: 'https://www.op.gg/summoners/euw/Dr%20Orange-Caps/ingame',
     },
     {
         name: 'Skewmond',
@@ -315,6 +315,7 @@ export const CHAMPIONS = [
     { name: 'Aphelios', key: '523' },
     { name: 'Ashe', key: '22' },
     { name: 'Aurelion Sol', key: '136' },
+    { name: 'Aurora', key: '893' },
     { name: 'Azir', key: '268' },
     { name: 'Bard', key: '432' },
     { name: "Bel'Veth", key: '200' },
