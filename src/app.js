@@ -101,7 +101,7 @@ async function handleCheckPlayersActive(players) {
 };
 
 // Check players activity every 5min
-setInterval(() => handleCheckPlayersActive(TRACKED_PLAYERS), 30000);
+setInterval(() => handleCheckPlayersActive(TRACKED_PLAYERS), 300000);
 
 app.listen(PORT, () => {
   console.log("Listening on port", PORT);
