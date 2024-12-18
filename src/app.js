@@ -6,7 +6,7 @@ import {
   verifyKeyMiddleware,
 } from "discord-interactions";
 import { PLAYERS, TRACKED_PLAYERS } from "./config/constants.js";
-import { fetchPlayersActiveMatch, getChampionById } from "./controllers/fetch.js";
+import { fetchPlayersActiveMatch, getChampionById, getPlayerRank, handlePostDiscordMessage, removeFromActive } from "./controllers/controllers.js";
 
 const app = express();
 
@@ -43,81 +43,65 @@ app.post(
 let activePlayers = [];
 
 async function handleCheckPlayersActive(players) {
+  // Loop tracked players
   for (let player of players) {
+
     let gameParticipants = [];
     let championName = '';
+
     try {
+      // Fetch if player is in game by puuid
       const fetchPlayerActivity = await fetchPlayersActiveMatch({player});
 
+      // Remove player from activePlayers list
       if (!fetchPlayerActivity) {
-        const activePlayersIndex = activePlayers.indexOf(player.puuid);
-        if (activePlayersIndex !== -1) {
-          activePlayers.splice(activePlayersIndex, 1);
-        }
-      } if (fetchPlayerActivity.success && activePlayers.includes(player.puuid)) {
-        continue;
+        removeFromActive(activePlayers, player.puuid)
+      } 
+      
+      // Check if player is active && added to activePlayers to not send message
+      if (fetchPlayerActivity.success && activePlayers.includes(player.puuid)) {
+          continue;
+      } 
+      
+      // Check if player is active && NOT added to activePlayers to send message
+      if (fetchPlayerActivity.success && !activePlayers.includes(player.puuid)) {
 
-      } if (fetchPlayerActivity.success && !activePlayers.includes(player.puuid)) {
+        // Add player to activePlayers list
+          activePlayers.push(player.puuid);
 
-        activePlayers.push(player.puuid);
-
-        const playerGameInfo = fetchPlayerActivity.participants.find(p => p.puuid === player.puuid);
-        if (playerGameInfo) {
-            championName = getChampionById(playerGameInfo.championId)
-        }
-
-        for (let participant of fetchPlayerActivity.participants) {
-          const matchedPlayer = PLAYERS.find(p => p.puuid === participant.puuid);
-          if (matchedPlayer) {
-            gameParticipants.push(matchedPlayer.name);
-          }
-        }
-
-        try {
-          // const resp = await fetch(`https://discord.com/api/v10/channels/${process.env.CHANNEL_ID}/messages`, {
-          //   method: "POST",
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //     Authorization: `Bot ${process.env.DISCORD_TOKEN}`
-          //   },
-          //   body: JSON.stringify({
-          //     content: `**${player.name} está jugando!** :loudspeaker:\n**Champion:** ${championName}\n**Account:** ${player.gameName}\n**Players:** ${gameParticipants.length ? gameParticipants.join(" | ") : 'Ningún jugador de LEC en la partida.'}\n**[OPGG :arrow_down:]**(${player.opgg})`,
-          //   }),
-          // });
-          const resp = await fetch(`https://discord.com/api/v10/channels/${process.env.CHANNEL_ID}/messages`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bot ${process.env.DISCORD_TOKEN}`
-            },
-            body: JSON.stringify({
-              embeds: [
-                {
-                  title: `${player.name} está jugando! :loudspeaker:`,
-                  description: `**Champion:** ${championName}\n**Account:** ${player.gameName}\n**Players:** ${gameParticipants.length ? gameParticipants.join(" | ") : 'Ningún jugador de LEC en la partida.'}`,
-                  url: `${player.opgg}`,
-                  color: 0xFFFF00,
-                },
-              ],
-            }),
-          });
-
-          if (!resp.ok) {
-            throw new Error("Error al enviar el mensaje");
+          // Get champion key and check champion name
+          const playerGameInfo = fetchPlayerActivity.participants.find(p => p.puuid === player.puuid);
+          if (playerGameInfo) {
+              championName = getChampionById(playerGameInfo.championId)
           }
 
-          console.log("Mensaje enviado");
-        } catch (error) {
-          console.error("Error al enviar mensaje:", error);
-        }
+          // Get other pro-players in game
+          for (let participant of fetchPlayerActivity.participants) {
+            const matchedPlayer = PLAYERS.find(p => p.puuid === participant.puuid);
+            if (matchedPlayer) {
+              gameParticipants.push(matchedPlayer.name);
+            }
+          }
+
+          const playerRank = await getPlayerRank(player.id);
+
+          // Post message on Discord
+          try {
+            handlePostDiscordMessage(player, championName, gameParticipants, playerRank)
+
+          } catch (error) {
+            console.error("Error al enviar mensaje:", error);
+          }
       }
+      
     } catch (error) {
       console.error("Error al buscar jugador", error);
     }
   }
 };
 
-setInterval(() => handleCheckPlayersActive(TRACKED_PLAYERS), 300000);
+// Check players activity every 5min
+setInterval(() => handleCheckPlayersActive(TRACKED_PLAYERS), 30000);
 
 app.listen(PORT, () => {
   console.log("Listening on port", PORT);
