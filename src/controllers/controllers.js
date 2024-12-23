@@ -97,9 +97,21 @@ export async function getPlayerRank(id) {
         }
 
         const data = await resp.json();
-        const formattedRank = data[0].tier.toLowerCase().charAt(0).toUpperCase() + data[0].tier.toLowerCase().slice(1);
+
+        if (!data || data.length === 0) {
+            return { success: false, rank: 'Unranked' };
+        }
         
-        return {success: true, rank: formattedRank, lp: data[0].leaguePoints}
+        const formatRank = (tier) => tier.toLowerCase().charAt(0).toUpperCase() + tier.toLowerCase().slice(1);
+        
+        const soloQueue = data.find(queue => queue.queueType === 'RANKED_SOLO_5x5');
+
+        if (soloQueue) {
+            return { success: true, rank: formatRank(soloQueue.tier), lp: soloQueue.leaguePoints };
+        }
+
+        return { success: false, rank: 'Unranked' };
+        
     } catch (error) {
         console.error("Error al obtener el rango")
     }
