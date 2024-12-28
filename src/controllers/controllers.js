@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { CHAMPIONS } from '../config/constants.js';
 
 export async function fetchPlayersActiveMatch ({player}) {
-    const url = `https://euw1.api.riotgames.com/lol/spectator/v5/active-games/by-summoner/${player.puuid}`
+    const url = `https://${player.region}.api.riotgames.com/lol/spectator/v5/active-games/by-summoner/${player.puuid}`
     try {
         const resp = await fetch(url, {
             method: "GET",
@@ -81,9 +81,9 @@ export function removeFromActive(activePlayers, puuid) {
     }
 }
 
-export async function getPlayerRank(id) {
+export async function getPlayerRank(id, region) {
     try {
-        const url = `https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${id}`
+        const url = `https://${region}.api.riotgames.com/lol/league/v4/entries/by-summoner/${id}`
         const resp = await fetch(url, {
             method: "GET",
             headers: {

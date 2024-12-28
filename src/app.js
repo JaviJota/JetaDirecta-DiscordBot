@@ -83,7 +83,7 @@ async function handleCheckPlayersActive(players) {
             }
           }
 
-          const playerRank = await getPlayerRank(player.id);
+          const playerRank = await getPlayerRank(player.id, player.region);
 
           // Post message on Discord
           try {
