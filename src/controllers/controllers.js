@@ -21,9 +21,13 @@ export async function fetchPlayersActiveMatch ({player}) {
             console.log(`${player.name} no está jugando`)
             return false
         }
-        if (resp.status === 200) {
+        if (resp.status === 200 && data.gameMode === "CLASSIC") {
             console.log(`>>${player.name} está en partida.`)
             return {success: true, participants: data.participants}
+        }
+        if (resp.status === 200 && data.gameMode !== "CLASSIC") {
+            console.log(`>>${player.name} está jugando ${data.gameMode.toLowerCase()}.`)
+            return false
         }
         // console.log(data.gameId)
         return false
