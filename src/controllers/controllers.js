@@ -159,7 +159,7 @@ export function getPlayerTeam(participants, playersInGame) {
     for (let playerInGame of playersInGame) {
         const { teamId } = participants.find(participant => participant.puuid === playerInGame.puuid) || {};
         if (teamId === 100) teams.blueTeam.push(playerInGame.name);
-        if (teamId === 200) teams.blueTeam.push(playerInGame.name);
+        if (teamId === 200) teams.redTeam.push(playerInGame.name);
     }
 
     return teams;
