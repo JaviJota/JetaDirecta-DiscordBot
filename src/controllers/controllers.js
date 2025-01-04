@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { CHAMPIONS } from '../config/constants.js';
+import { CHAMPIONS, PLAYERS } from '../config/constants.js';
 
 export async function fetchPlayersActiveMatch ({player}) {
     const url = `https://${player.region}.api.riotgames.com/lol/spectator/v5/active-games/by-summoner/${player.puuid}`
@@ -37,7 +37,7 @@ export async function fetchPlayersActiveMatch ({player}) {
     }
 };
 
-export async function handlePostDiscordMessage(player, championName, gameParticipants, playerRank) {
+export async function handlePostDiscordMessage(player, championName, gameParticipants, playerRank, teamPlayers) {
     try {
         const url = `https://discord.com/api/v10/channels/${process.env.CHANNEL_ID}/messages`
         const resp = await fetch(url, {
@@ -50,7 +50,28 @@ export async function handlePostDiscordMessage(player, championName, gamePartici
               embeds: [
                 {
                   title: `${player.name} está jugando! :loudspeaker:`,
-                  description: `**Champion:** ${championName}\n**Account:** ${player.gameName}\n**Rank:** ${playerRank.rank} (${playerRank.lp} LP)\n**Players:** ${gameParticipants.length ? gameParticipants.join(" | ") : 'Ningún jugador de LEC en la partida.'}`,
+                //   description: `**Champion:** ${championName}\n**Account:** ${player.gameName}\n**Rank:** ${playerRank.rank} (${playerRank.lp} LP)\n**Players:**\n 🔵 Blue Team:\n - ${teamPlayers.blueTeam.length ? teamPlayers.blueTeam.join("\n- ") : 'Ningún jugador de LEC en el equipo.'}\n🔴 Red Team:\n - ${teamPlayers.redTeam.length ? teamPlayers.redTeam.join("\n- ") : 'Ningún jugador de LEC en el equipo.'}`,
+                  fields: [
+                    {
+                      name: "Champion:",
+                      value: `${championName}`,
+                    //   inline: false
+                    },
+                    {
+                      name: "Account:",
+                      value: `${player.gameName}`,
+                    //   inline: false
+                    },
+                    {
+                      name: "Rank:",
+                      value: `${playerRank.rank} (${playerRank.lp} LP)`,
+                    //   inline: false
+                    },
+                    {
+                      name: "Players:",
+                      value: `🔵 **Blue Team:**\n- ${teamPlayers.blueTeam.length ? teamPlayers.blueTeam.join("\n- ") : 'Ningún jugador de LEC en el equipo.'}\n\n🔴 **Red Team:**\n- ${teamPlayers.redTeam.length ? teamPlayers.redTeam.join("\n- ") : 'Ningún jugador de LEC en el equipo.'}`
+                    }
+                  ],
                   url: `${player.opgg}`,
                   color: 0xFFFF00,
                 },
@@ -119,4 +140,27 @@ export async function getPlayerRank(id, region) {
     } catch (error) {
         console.error("Error al obtener el rango")
     }
+}
+
+export  function getPlayersInGame(players) {
+    let gameParticipants = []
+    for (let player of players) {
+        const matchedPlayer = PLAYERS.find(p => p.puuid === player.puuid);
+        if (matchedPlayer) {
+            gameParticipants.push({puuid: matchedPlayer.puuid, name: matchedPlayer.name});
+        }
+    }
+    return gameParticipants
+}
+
+export function getPlayerTeam(participants, playersInGame) {
+    const teams = { blueTeam: [], redTeam: [] };
+
+    for (let playerInGame of playersInGame) {
+        const { teamId } = participants.find(participant => participant.puuid === playerInGame.puuid) || {};
+        if (teamId === 100) teams.blueTeam.push(playerInGame.name);
+        if (teamId === 200) teams.blueTeam.push(playerInGame.name);
+    }
+
+    return teams;
 }

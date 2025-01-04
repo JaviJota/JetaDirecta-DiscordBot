@@ -10,7 +10,7 @@ Este bot fue desarrollado para el streamer de Twitch **Toad Amarillo** (https://
   - **Campeón**
   - **Cuenta**
   - **Rango**
-  - **Otros Jugadores**
+  - **Otros Jugadores** (Clasificados por equipos)
 
 ## 🔧 Tecnologías Utilizadas
 

@@ -6,7 +6,7 @@ import {
   verifyKeyMiddleware,
 } from "discord-interactions";
 import { PLAYERS, TRACKED_PLAYERS } from "./config/constants.js";
-import { fetchPlayersActiveMatch, getChampionById, getPlayerRank, handlePostDiscordMessage, removeFromActive } from "./controllers/controllers.js";
+import { fetchPlayersActiveMatch, getChampionById, getPlayerRank, getPlayersInGame, getPlayerTeam, handlePostDiscordMessage, removeFromActive } from "./controllers/controllers.js";
 
 const app = express();
 
@@ -46,7 +46,6 @@ async function handleCheckPlayersActive(players) {
   // Loop tracked players
   for (let player of players) {
 
-    let gameParticipants = [];
     let championName = '';
 
     try {
@@ -76,18 +75,16 @@ async function handleCheckPlayersActive(players) {
           }
 
           // Get other pro-players in game
-          for (let participant of fetchPlayerActivity.participants) {
-            const matchedPlayer = PLAYERS.find(p => p.puuid === participant.puuid);
-            if (matchedPlayer) {
-              gameParticipants.push(matchedPlayer.name);
-            }
-          }
+          const playersInGame = getPlayersInGame(fetchPlayerActivity.participants);
+
+          // Get the team of each player
+          const teamPlayers = getPlayerTeam(fetchPlayerActivity.participants, playersInGame);
 
           const playerRank = await getPlayerRank(player.id, player.region);
 
           // Post message on Discord
           try {
-            handlePostDiscordMessage(player, championName, gameParticipants, playerRank)
+            handlePostDiscordMessage(player, championName, playersInGame, playerRank, teamPlayers)
 
           } catch (error) {
             console.error("Error al enviar mensaje:", error);
