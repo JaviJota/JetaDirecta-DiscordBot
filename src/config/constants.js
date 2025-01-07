@@ -276,11 +276,11 @@ export const PLAYERS = [
     },
     {
         name: 'Rahel',
-        puuid: 'Unknown',
+        puuid: 'q_eD_HzC-qCW3MRlulpGgICNH9E1ZfbNXl9JebdVu6QusXIuVm6fCgXGxi1lT5XwTpVnY3wKU_wFQA',
     },
     {
         name: 'Loopy',
-        puuid: 'Unknown',
+        puuid: '38LeJYu5L-W-tOFNIilcMeI41n3NmYJ5IIE0vRBpWaPsLsglVcVqyPN3wS4RLs081HdWR_bfvge6Hg',
     },
     {
         name: 'Irrelevant',

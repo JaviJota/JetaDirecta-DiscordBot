@@ -37,7 +37,7 @@ export async function fetchPlayersActiveMatch ({player}) {
     }
 };
 
-export async function handlePostDiscordMessage(player, championName, gameParticipants, playerRank, teamPlayers) {
+export async function handlePostDiscordMessage(player, championName, playerRank, teamPlayers) {
     try {
         const url = `https://discord.com/api/v10/channels/${process.env.CHANNEL_ID}/messages`
         const resp = await fetch(url, {
