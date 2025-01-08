@@ -84,7 +84,7 @@ async function handleCheckPlayersActive(players) {
 
           // Post message on Discord
           try {
-            handlePostDiscordMessage(player, championName, playersInGame, playerRank, teamPlayers)
+            handlePostDiscordMessage(player, championName, playerRank, teamPlayers)
 
           } catch (error) {
             console.error("Error al enviar mensaje:", error);
