@@ -40,6 +40,14 @@ export const TRACKED_PLAYERS = [
         opgg: 'https://www.op.gg/summoners/euw/Winter%20arc-Gavi6/ingame',
     },
     {
+        name: 'Myrwn',
+        gameName: 'Lamine Yamal',
+        puuid: 'w6yW7yxclq-w6LjIwm4ipFlBw7cdp38qjvKgoku8vrvwM_hPHdlK2Ezxsk_NU-jCo6YYXPh6THw9Aw',
+        id: 'u-K4A0kmXTgScRC1LwaiKzmZGp92DDGj62KSfMDOlAfKm9A',
+        region: 'euw1',
+        opgg: 'https://www.op.gg/summoners/euw/Lamine%20Yamal-Caro/ingame',
+    },
+    {
         name: 'Razork',
         gameName: 'Razørk Activoo',
         puuid: 'yxPaIxcqEO9Mf-EFLkx_wjkNR0uM2oVIzEDr6R6dgA6BkNO99LZmxgaVh_hQeMRxNxc77ByKtF0ktA',
