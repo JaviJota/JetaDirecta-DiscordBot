@@ -151,6 +151,10 @@ export const PLAYERS = [
         puuid: 'JlJmhgnApJXdd5SUBETNcdsAiLkSS4AdfWOraHvON7uKsX4faz1rMuzN-RkuYhQnG4BBlhPclMf5Lw',
     },
     {
+        name: 'Myrwn',
+        puuid: 'w6yW7yxclq-w6LjIwm4ipFlBw7cdp38qjvKgoku8vrvwM_hPHdlK2Ezxsk_NU-jCo6YYXPh6THw9Aw',
+    },
+    {
         name: 'Razork',
         puuid: 'yxPaIxcqEO9Mf-EFLkx_wjkNR0uM2oVIzEDr6R6dgA6BkNO99LZmxgaVh_hQeMRxNxc77ByKtF0ktA',
     },
